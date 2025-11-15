@@ -3,9 +3,9 @@ import { supabase } from '@/lib/supabaseClient'
 
 export async function GET(
   _request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = params.id
+  const { id } = await params
 
   const { data, error } = await supabase
     .from('jobs')

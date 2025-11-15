@@ -3,9 +3,10 @@ import { supabase } from '@/lib/supabaseClient'
 
 export async function GET(
   _request: Request,
-  { params }: { params: { category: string } }
+  { params }: { params: Promise<{ category: string }> }
 ) {
-  const category = decodeURIComponent(params.category)
+  const { category: rawCategory } = await params
+  const category = decodeURIComponent(rawCategory)
 
   const { data, error } = await supabase
     .from('jobs')
